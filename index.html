@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>终极人格音乐鉴定测试</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fce4ec;
+            text-align: center;
+            padding: 20px;
+            transition: all 0.5s ease;
+            color: #c2185b;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #e91e63;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 0px rgba(233, 30, 99, 0.1);
+        }
+        
+        .question {
+            background: linear-gradient(145deg, #f8bbd0, #f48fb1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .option {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid #f8bbd0;
+            font-size: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+            background: #fff9f9;
+        }
+        
+        .option::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(244, 143, 177, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+        }
+        
+        .option:active::after {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .hidden {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        #result {
+            margin-top: 30px;
+            animation: fadeIn 1s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .prank-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e91e63;
+            margin: 20px 0;
+            animation: shake 0.5s ease infinite;
+            padding: 15px;
+            background: #fff3f3;
+            border-radius: 10px;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: rotate(-1deg) scale(1.05); }
+            50% { transform: rotate(1deg) scale(0.95); }
+        }
+        
+        .restart {
+            background: linear-gradient(135deg, #e91e63, #c2185b);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+            margin-top: 30px;
+        }
+        
+        .restart:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.4);
+        }
+        
+        .singer-img {
+            width: 300px;
+            border-radius: 15px;
+            margin: 20px auto;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            border: 3px solid #e91e63;
+            transition: all 0.5s ease;
+        }
+
+        .singer-img:hover {
+            transform: rotate(5deg) scale(1.05);
+            filter: drop-shadow(0 0 10px rgba(233,30,99,0.5));
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔮 终极人格音乐鉴定测试 🔮</h1>
+        <p>回答以下问题，揭秘你的音乐人格DNA！</p>
+        
+        <div id="quiz">
+            <!-- 问题1 -->
+            <div class="question" id="q1">
+                <h3>1. 你手机相册最新一张照片是？</h3>
+                <div class="options">
+                    <div class="option" onclick="nextQuestion('q1', 'q2', '自拍')">🤳 自拍</div>
+                    <div class="option" onclick="nextQuestion('q1', 'q2', '美食')">🍔 美食</div>
+                    <div class="option" onclick="nextQuestion('q1', 'q2', '猫猫')">🐱 猫猫</div>
+                    <div class="option" onclick="nextQuestion('q1', 'q2', '搞笑meme')">😂 搞笑meme</div>
+                    <div class="option" onclick="nextQuestion('q1', 'q2', '工作截图')">💼 工作截图</div>
+                    <div class="option" onclick="nextQuestion('q1', 'q2', '神秘内容')">🔮 神秘内容</div>
+                </div>
+            </div>
+            
+            <!-- 问题2 -->
+            <div class="question hidden" id="q2">
+                <h3>2. 突然获得超能力你会？</h3>
+                <div class="options">
+                    <div class="option" onclick="nextQuestion('q2', 'q3', '拯救世界')">🦸 拯救世界</div>
+                    <div class="option" onclick="nextQuestion('q2', 'q3', '疯狂赚钱')">💰 疯狂赚钱</div>
+                    <div class="option" onclick="nextQuestion('q2', 'q3', '捉弄朋友')">😈 捉弄朋友</div>
+                    <div class="option" onclick="nextQuestion('q2', 'q3', '成为网红')">📸 成为网红</div>
+                    <div class="option" onclick="nextQuestion('q2', 'q3', '躺平摆烂')">🛌 躺平摆烂</div>
+                    <div class="option" onclick="nextQuestion('q2', 'q3', '吃遍全球')">🍣 吃遍全球</div>
+                </div>
+            </div>
+            
+            <!-- 问题3 -->
+            <div class="question hidden" id="q3">
+                <h3>3. 你的秘密超能力是？</h3>
+                <div class="options">
+                    <div class="option" onclick="nextQuestion('q3', 'q4', '读心术')">🧠 读心术</div>
+                    <div class="option" onclick="nextQuestion('q3', 'q4', '瞬移')">⚡ 瞬移</div>
+                    <div class="option" onclick="nextQuestion('q3', 'q4', '时间暂停')">⏳ 时间暂停</div>
+                    <div class="option" onclick="nextQuestion('q3', 'q4', '变身术')">🎭 变身术</div>
+                    <div class="option" onclick="nextQuestion('q3', 'q4', '钞能力')">💸 钞能力</div>
+                    <div class="option" onclick="nextQuestion('q3', 'q4', '吃不胖')">🍰 吃不胖</div>
+                </div>
+            </div>
+            
+            <!-- 问题4 -->
+            <div class="question hidden" id="q4">
+                <h3>4. 你的灵魂动物是？</h3>
+                <div class="options">
+                    <div class="option" onclick="nextQuestion('q4', 'q5', '二哈')">🐶 二哈</div>
+                    <div class="option" onclick="nextQuestion('q4', 'q5', '熊猫')">🐼 熊猫</div>
+                    <div class="option" onclick="nextQuestion('q4', 'q5', '树懒')">🦥 树懒</div>
+                    <div class="option" onclick="nextQuestion('q4', 'q5', '狐狸')">🦊 狐狸</div>
+                    <div class="option" onclick="nextQuestion('q4', 'q5', '尖叫鸡')">🐔 尖叫鸡</div>
+                    <div class="option" onclick="nextQuestion('q4', 'q5', '蜜獾')">🐾 蜜獾</div>
+                </div>
+            </div>
+            
+            <!-- 问题5 -->
+            <div class="question hidden" id="q5">
+                <h3>5. 现在最想对我说的是？</h3>
+                <div class="options">
+                    <div class="option" onclick="nextQuestion('q5', 'q6', '你最好有事')">😒 你最好有事</div>
+                    <div class="option" onclick="nextQuestion('q5', 'q6', '快出结果')">⏰ 快出结果</div>
+                    <div class="option" onclick="nextQuestion('q5', 'q6', '好期待')">🥰 好期待</div>
+                    <div class="option" onclick="nextQuestion('q5', 'q6', '不信但玩')">🤨 不信但玩</div>
+                    <div class="option" onclick="nextQuestion('q5', 'q6', '感觉有诈')">🕵️ 感觉有诈</div>
+                    <div class="option" onclick="nextQuestion('q5', 'q6', '再来一次')">🔁 再来一次</div>
+                </div>
+            </div>
+
+            <!-- 新增问题6：歌手选择 -->
+            <div class="question hidden" id="q6">
+                <h3>6. 你的音乐灵魂伴侣是？</h3>
+                <div class="options">
+                    <div class="option" onclick="showResult('周杰伦')">🎵 周杰伦</div>
+                    <div class="option" onclick="showResult('G.E.M.邓紫棋')">🎤 G.E.M.邓紫棋</div>
+                    <div class="option" onclick="showResult('薛之谦')">🎸 薛之谦</div>
+                    <div class="option" onclick="showResult('林俊杰')">🎹 林俊杰</div>
+                    <div class="option" onclick="showResult('陈奕迅')">🎧 陈奕迅</div>
+                    <div class="option" onclick="showResult('王力宏')">🥁 王力宏</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="result" class="hidden">
+            <div class="prank-text">🔍 正在扫描你的灵魂...</div>
+            <div class="prank-text">📡 连接宇宙数据库...</div>
+            <div class="prank-text">⚠️ 发现危险思想...</div>
+            
+            <h2>🧬 基因检测结果：</h2>
+            <p class="prank-text" id="personalityResult"></p>
+            <img class="singer-img" id="singerPhoto" src="" alt="歌手照片">
+            <p>🎉 恭喜你获得限定称号：<span id="titleResult"></span></p>
+            <p class="restart">其实这只是一个玩笑啦！不过既然你看到了这里...说明你是个很可爱的人</p>
+            <button class="restart" onclick="restartQuiz()">重新觉醒人格</button>
+        </div>
+    </div>
+
+    <script>
+        const personalityData = {
+            photos: {
+                '自拍': '自恋指数MAX',
+                '美食': '吃货星人',
+                '猫猫': '专业铲屎官',
+                '搞笑meme': '梗王之王',
+                '工作截图': '职场卷王',
+                '神秘内容': '危险人物'
+            },
+            superpower: {
+                '拯救世界': '正义の伙伴',
+                '疯狂赚钱': '资本の化身',
+                '捉弄朋友': '邪恶天才',
+                '成为网红': '戏精本精', 
+                '躺平摆烂': '佛系大师',
+                '吃遍全球': '美食猎人'
+            },
+            ability: {
+                '读心术': '脑洞大开',
+                '瞬移': '闪现专家',
+                '时间暂停': '拖延症晚期',
+                '变身术': '戏精学院长',
+                '钞能力': '贫穷幻想家',
+                '吃不胖': '凡尔赛大师'
+            },
+            animal: {
+                '二哈': '拆家狂魔',
+                '熊猫': '国宝级宅',
+                '树懒': '闪电反应',
+                '狐狸': '诡计多端',
+                '尖叫鸡': '噪音制造机',
+                '蜜獾': '平头哥转世'
+            },
+            reaction: {
+                '你最好有事': '反套路达人',
+                '快出结果': '急性子代表',
+                '好期待': '天真小可爱',
+                '不信但玩': '口嫌体正直',
+                '感觉有诈': '福尔摩斯·真',
+                '再来一次': '抖M体质'
+            },
+            singers: {
+                '周杰伦': { 
+                    desc: '奶茶小公举/暗号专家',
+                    img: 'https://bbsimage.res.meizu.com/forum/201403/15/100448x8z9kz9d1uqu9j9i.jpg'  // 请替换实际图片URL
+                },
+                'G.E.M.邓紫棋': {
+                    desc: '巨肺小天后/泡面头教主',
+                    img: 'https://n.sinaimg.cn/sinacn20121/320/w2048h3072/20200221/05e7-ipvnsze5250270.jpg'
+                },
+                '薛之谦': {
+                    desc: '段子手之王/火锅推广大使',
+                    img: 'https://c-ssl.duitang.com/uploads/item/201910/07/20191007173314_rkiew.jpg'
+                },
+                '林俊杰': {
+                    desc: '行走的CD/电竞狂魔',
+                    img: 'https://p1.ssl.qhimg.com/t012642d00e662e8520.jpg'
+                },
+                '陈奕迅': {
+                    desc: 'K歌之王/表情包本尊',
+                    img: 'https://p6.qhimg.com/t01c086562259fbc576.jpg'
+                },
+                '王力宏': {
+                    desc: '音乐才子/盖世英雄',
+                    img: 'https://hao6.qhimg.com/t01984fb16326c5c51f.jpg'
+                }
+            }
+        };
+
+        let selectedAnswers = {};
+
+        function nextQuestion(currentQ, nextQ, answer) {
+            selectedAnswers[currentQ] = answer;
+            document.getElementById(currentQ).classList.add('hidden');
+            document.getElementById(nextQ).classList.remove('hidden');
+        }
+
+        function showResult(selectedSinger) {
+            selectedAnswers['q6'] = selectedSinger;
+            document.getElementById('quiz').classList.add('hidden');
+            const resultDiv = document.getElementById('result');
+            resultDiv.classList.remove('hidden');
+
+            // 显示个性分析
+            const resultText = `经过量子计算分析：
+🔸 你是${personalityData.photos[selectedAnswers.q1]}
+🔸 ${personalityData.superpower[selectedAnswers.q2]}
+🔸 拥有${personalityData.ability[selectedAnswers.q3]}特性
+🔸 隐藏着${personalityData.animal[selectedAnswers.q4]}基因
+🔸 最终鉴定为：${personalityData.reaction[selectedAnswers.q5]}！`;
+
+            document.getElementById('personalityResult').innerHTML = resultText.replace(/\n/g, '<br>');
+            
+            // 显示歌手信息
+            const singer = personalityData.singers[selectedSinger];
+            document.getElementById('singerPhoto').src = singer.img;
+            document.getElementById('titleResult').innerHTML = `
+                「${selectedAnswers.q4}の${personalityData.reaction[selectedAnswers.q5]}」<br>
+                🎶 音乐DNA匹配：${singer.desc}
+            `;
+
+            // 特效部分
+            new Audio('https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkle-902.mp3').play();
+            setTimeout(() => {
+                document.body.style.background = "linear-gradient(45deg, #ff99cc, #ffcccc)";
+            }, 1000);
+        }
+
+        function restartQuiz() {
+            document.getElementById('result').classList.add('hidden');
+            document.getElementById('quiz').classList.remove('hidden');
+            document.querySelectorAll('.question').forEach((q, index) => {
+                q.classList.add('hidden');
+                if(index === 0) q.classList.remove('hidden');
+            });
+            document.body.style.background = "#fce4ec";
+            selectedAnswers = {};
+        }
+    </script>
+</body>
+</html>
